@@ -46,6 +46,8 @@ jobs:
 
       chart-path: helm/openg2p-pbms
 
+      chart-inherit-questions: '{"dependency":"openg2p-pbms-platform","alias":"pbms"}'
+
       chart-image-paths: |
         [".pbms.odoo.image.tag",".pbms.celeryWorkers.image.tag",".pbms.beatProducers.image.tag",".pbms.staffPortalApi.image.tag"]
 
