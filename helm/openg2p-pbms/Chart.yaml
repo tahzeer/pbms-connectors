@@ -1,0 +1,42 @@
+apiVersion: v2
+name: openg2p-pbms
+description: |
+  OpenG2P PBMS — the chart you install. It has no templates of its own.
+  It depends on openg2p-pbms-platform and sets the Odoo, Celery, and staff
+  API images that a cluster runs.
+type: application
+
+# Version handling:
+#   This `version` is a STATIC placeholder. CI derives the published version
+#   from git and overrides it at package time, in lockstep with the three
+#   images this chart references.
+version: 0.0.0-develop
+appVersion: "develop"
+
+keywords:
+  - openg2p
+  - pbms
+home: https://openg2p.org
+icon: https://openg2p.github.io/openg2p-helm/openg2p-logo.png
+sources:
+  - https://github.com/OpenG2P/pbms-connectors
+maintainers:
+  - name: OpenG2P
+    email: info@openg2p.org
+
+# openg2p-pbms-platform is HARDCODED (not CI-rewritten). The images in
+# docker/*/Dockerfile use ARG PBMS_VERSION=develop, the moving tag published
+# with that platform chart. Move this version and PBMS_VERSION together when
+# cutting a release against a specific platform chart.
+# Aliased to `pbms` so the overlay nests under .Values.pbms.*.
+dependencies:
+  - name: openg2p-pbms-platform
+    alias: pbms
+    version: 0.0.0-develop
+    repository: https://openg2p.github.io/openg2p-helm
+
+annotations:
+  catalog.cattle.io/display-name: "OpenG2P PBMS"
+  catalog.cattle.io/certified: partner
+  catalog.cattle.io/kube-version: ">=1.23.0-0"
+  openg2p.org/add-to-rancher: ""
