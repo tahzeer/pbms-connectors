@@ -14,7 +14,9 @@ from ..engine import async_session, sync_session
 _PAGE = 500
 
 
-def iter_eligible_db(model, rules: list[tuple[str, str]], batch_size: int) -> Iterator[list[str]]:
+def iter_eligible_db(
+    model, rules: list[tuple[str, str]], batch_size: int
+) -> Iterator[list[str]]:
     statement = _combine_db(model, rules, allowed=None)
     if statement is None:
         return
@@ -34,7 +36,9 @@ def iter_priority_db(
             return
         rules = [(domain, "INTERSECT") for domain in priority_domains]
         combined = _combine_db(model, rules, allowed=None)
-        enrolled = select(id_column).where(id_column.in_([str(item) for item in enrolled_ids]))
+        enrolled = select(id_column).where(
+            id_column.in_([str(item) for item in enrolled_ids])
+        )
         statement = combined.intersect(enrolled) if combined is not None else enrolled
     else:
         statement = _combine_db(model, fallback_rules, allowed=None)
@@ -62,7 +66,9 @@ def multipliers_db(
     columns = [id_column]
     if use_field:
         columns.append(getattr(model, multiplier_field))
-    statement = select(*columns).where(id_column.in_([str(item) for item in registrant_ids]))
+    statement = select(*columns).where(
+        id_column.in_([str(item) for item in registrant_ids])
+    )
     clause = sqlalchemy_clause(pbms_domain, model, allowed)
     if clause is not None:
         statement = statement.where(clause)
@@ -99,9 +105,13 @@ async def search_db(
     column = getattr(model, field_name, id_column)
     statement = statement.order_by(column.desc() if descending else column.asc())
     async with async_session() as session:
-        count = await session.scalar(select(func.count()).select_from(statement.subquery()))
+        count = await session.scalar(
+            select(func.count()).select_from(statement.subquery())
+        )
         rows = (
-            await session.scalars(statement.offset(page_size * (page - 1)).limit(page_size))
+            await session.scalars(
+                statement.offset(page_size * (page - 1)).limit(page_size)
+            )
         ).all()
     return [to_payload(row) for row in rows], int(count or 0)
 
@@ -125,7 +135,9 @@ def iter_eligible_dci(
     reg_record_type: str,
     id_of: Callable[[dict], str],
 ) -> Iterator[list[str]]:
-    ids = _combine_dci(rules, allowed, match_all_field, reg_type, reg_record_type, id_of)
+    ids = _combine_dci(
+        rules, allowed, match_all_field, reg_type, reg_record_type, id_of
+    )
     yield from _batches(ids, batch_size)
 
 
@@ -142,7 +154,9 @@ def iter_priority_dci(
 ) -> Iterator[list[str]]:
     if priority_domains:
         rules = [(domain, "INTERSECT") for domain in priority_domains]
-        ids = _combine_dci(rules, allowed, match_all_field, reg_type, reg_record_type, id_of)
+        ids = _combine_dci(
+            rules, allowed, match_all_field, reg_type, reg_record_type, id_of
+        )
         enrolled = {str(item) for item in enrolled_ids}
         ids = [item for item in ids if item in enrolled]
     else:
@@ -260,7 +274,9 @@ def _stream(statement, batch_size: int) -> Iterator[list[str]]:
             yield [str(row[0]) for row in rows if row[0] is not None]
 
 
-def _combine_dci(rules, allowed, match_all_field, reg_type, reg_record_type, id_of) -> list[str]:
+def _combine_dci(
+    rules, allowed, match_all_field, reg_type, reg_record_type, id_of
+) -> list[str]:
     combined: Optional[set[str]] = None
     for domain, operator in rules:
         expression = dci_expression(domain, allowed, match_all_field)
@@ -301,7 +317,9 @@ def _batches(ids: list[str], batch_size: int) -> Iterator[list[str]]:
         yield ids[start : start + batch_size]
 
 
-async def _beneficiary_ids(bg_task_session: AsyncSession, beneficiary_list_id: str) -> list[str]:
+async def _beneficiary_ids(
+    bg_task_session: AsyncSession, beneficiary_list_id: str
+) -> list[str]:
     result = await bg_task_session.execute(
         async_select(BeneficiaryListDetails.registrant_details).where(
             BeneficiaryListDetails.beneficiary_list_id == beneficiary_list_id

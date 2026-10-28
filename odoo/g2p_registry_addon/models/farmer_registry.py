@@ -1,6 +1,4 @@
-from odoo import models, fields
-
-from .registry import G2PRegistry
+from odoo import fields, models
 
 
 class G2PFarmerRegistry(models.Model):
@@ -100,7 +98,9 @@ class G2PFarmerRegistry(models.Model):
     # Not part of the DCI spec. Usable with the DB connector only.
     country_code = fields.Char(string="Country Code", index=True)
     # Not part of the DCI spec. Usable with the DB connector only.
-    geo_lowest_level_value_id = fields.Char(string="Geo Lowest Level Value ID", index=True)
+    geo_lowest_level_value_id = fields.Char(
+        string="Geo Lowest Level Value ID", index=True
+    )
     # Not part of the DCI spec. Usable with the DB connector only.
     geo_code_hierarchy_json = fields.Json(string="Geo Code Hierarchy")
 

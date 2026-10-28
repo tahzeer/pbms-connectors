@@ -146,13 +146,17 @@ class FarmerSummaries:
             for registrant in detail.registrant_details or []:
                 parsed = RegistrantDetails(**registrant)
                 farmer = by_id.get(str(parsed.registrant_id))
-                gender = (getattr(farmer, "gender", None) or "").lower() if farmer else ""
+                gender = (
+                    (getattr(farmer, "gender", None) or "").lower() if farmer else ""
+                )
                 for benefit_code_id, value in (parsed.entitlement or {}).items():
                     entitlements.setdefault(benefit_code_id, []).append(value)
                     if gender == Gender.MALE.value:
                         entitlements_male.setdefault(benefit_code_id, []).append(value)
                     elif gender == Gender.FEMALE.value:
-                        entitlements_female.setdefault(benefit_code_id, []).append(value)
+                        entitlements_female.setdefault(benefit_code_id, []).append(
+                            value
+                        )
 
         all_stats = entitlement_stats(entitlements)
         male_stats = entitlement_stats(entitlements_male)
@@ -266,7 +270,11 @@ class HouseholdSummaries:
                 for field_name, values in buckets.items():
                     value = getattr(household, field_name, None)
                     if value is not None:
-                        values.append(float(value) if field_name == "overcrowding_indicator" else value)
+                        values.append(
+                            float(value)
+                            if field_name == "overcrowding_indicator"
+                            else value
+                        )
         for field_name, values in buckets.items():
             apply_quartiles(summary, field_name, values)
         bg_task_session.add(summary)
@@ -318,10 +326,18 @@ class HouseholdSummaries:
                 average_entitlement_per_registrant=row.average_entitlement_per_person,
             ),
             registry_summary=BeneficiaryListSummaryHousehold(
-                size_children_u5_mean=fmt(row.size_children_u5_mean, row.size_children_u5_units),
-                size_children_u5_q1=fmt(row.size_children_u5_q1, row.size_children_u5_units),
-                size_children_u5_q2=fmt(row.size_children_u5_q2, row.size_children_u5_units),
-                size_children_u5_q3=fmt(row.size_children_u5_q3, row.size_children_u5_units),
+                size_children_u5_mean=fmt(
+                    row.size_children_u5_mean, row.size_children_u5_units
+                ),
+                size_children_u5_q1=fmt(
+                    row.size_children_u5_q1, row.size_children_u5_units
+                ),
+                size_children_u5_q2=fmt(
+                    row.size_children_u5_q2, row.size_children_u5_units
+                ),
+                size_children_u5_q3=fmt(
+                    row.size_children_u5_q3, row.size_children_u5_units
+                ),
                 size_elderly_mean=fmt(row.size_elderly_mean, row.size_elderly_units),
                 size_elderly_q1=fmt(row.size_elderly_q1, row.size_elderly_units),
                 size_elderly_q2=fmt(row.size_elderly_q2, row.size_elderly_units),

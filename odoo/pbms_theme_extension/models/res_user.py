@@ -1,7 +1,6 @@
 import logging
 
 from odoo import SUPERUSER_ID, _, api, models
-from odoo.exceptions import AccessDenied
 from odoo.http import request
 
 _logger = logging.getLogger(__name__)
@@ -18,7 +17,9 @@ class ResUser(models.Model):
         if not users:
             users = self.search([("email", "=", login)])
         if len(users) != 1:
-            raise Exception(_("Incorrect email. Please enter the registered email address."))
+            raise Exception(
+                _("Incorrect email. Please enter the registered email address.")
+            )
         return users.action_reset_password()
 
     @classmethod
@@ -28,7 +29,7 @@ class ResUser(models.Model):
         if request and request.httprequest.path.startswith("/web/login"):
             with cls.pool.cursor() as cr:
                 self = api.Environment(cr, SUPERUSER_ID, {})[cls._name]
-                user = self.sudo().search([("login", "=", login)])
+                self.sudo().search([("login", "=", login)])
                 # if user and user.partner_id.is_registrant:
                 #     raise AccessDenied()
 

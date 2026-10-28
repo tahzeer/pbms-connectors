@@ -5,8 +5,8 @@ from openg2p_bg_task_models.schemas import BeneficiarySearchResponsePayload
 from ..interface import RegistryInterface
 from ..models import G2PFarmerRegistry
 from ..schema import G2PFarmerRegistryPayload
-from ._summary import FarmerSummaries
 from . import _transport
+from ._summary import FarmerSummaries
 
 
 class FarmerDB(FarmerSummaries, RegistryInterface):
@@ -21,9 +21,15 @@ class FarmerDB(FarmerSummaries, RegistryInterface):
     def iter_eligible_ids(self, rules, batch_size: int):
         return _transport.iter_eligible_db(G2PFarmerRegistry, rules, batch_size)
 
-    def iter_priority_ids(self, priority_domains, enrolled_ids, fallback_rules, batch_size):
+    def iter_priority_ids(
+        self, priority_domains, enrolled_ids, fallback_rules, batch_size
+    ):
         return _transport.iter_priority_db(
-            G2PFarmerRegistry, priority_domains, enrolled_ids, fallback_rules, batch_size
+            G2PFarmerRegistry,
+            priority_domains,
+            enrolled_ids,
+            fallback_rules,
+            batch_size,
         )
 
     def entitlement_multipliers(

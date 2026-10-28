@@ -1,3 +1,4 @@
+# ruff: noqa: B018
 {
     "name": "PBMS Registry Type Addon",
     "version": "3.1.1",

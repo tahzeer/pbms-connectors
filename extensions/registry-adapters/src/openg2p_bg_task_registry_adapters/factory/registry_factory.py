@@ -5,7 +5,6 @@ from ..config import RegistryAdapterSettings
 from ..interface import RegistryInterface
 from ..models import G2PRegistryType
 
-
 _CLASSES = {
     (G2PRegistryType.FARMER.value, "db"): FarmerDB,
     (G2PRegistryType.FARMER.value, "dci"): FarmerDCI,

@@ -1,3 +1,4 @@
+# ruff: noqa: B018
 {
     "name": "PBMS Theme",
     "category": "G2P",

@@ -73,7 +73,9 @@ def farmer_flat(record: dict) -> dict:
         "registration_date": personal.get("registration_date"),
         "disabled": personal.get("self_id_disability"),
         "education_level": personal.get("education_level"),
-        "language_spoken": languages[0] if isinstance(languages, list) and languages else None,
+        "language_spoken": languages[0]
+        if isinstance(languages, list) and languages
+        else None,
         "latitude": geo.get("latitude"),
         "longitude": geo.get("longitude"),
     }
@@ -83,7 +85,9 @@ def household_flat(record: dict) -> dict:
     family = record.get("family_details") or {}
     place = family.get("place") or {}
     geo = place.get("geo") or {}
-    head = ((family.get("group_head_info") or {}).get("demographic_info") or {}).get("name") or {}
+    head = ((family.get("group_head_info") or {}).get("demographic_info") or {}).get(
+        "name"
+    ) or {}
     extra = (record.get("additional_attributes") or [{}])[0]
     return {
         "functional_record_id": household_id(record),

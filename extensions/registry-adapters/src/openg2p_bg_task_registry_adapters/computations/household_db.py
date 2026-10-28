@@ -5,8 +5,8 @@ from openg2p_bg_task_models.schemas import BeneficiarySearchResponsePayload
 from ..interface import RegistryInterface
 from ..models import G2PRegisterHousehold
 from ..schema import G2PRegisterHouseholdPayload
-from ._summary import HouseholdSummaries
 from . import _transport
+from ._summary import HouseholdSummaries
 
 
 class HouseholdDB(HouseholdSummaries, RegistryInterface):
@@ -21,7 +21,9 @@ class HouseholdDB(HouseholdSummaries, RegistryInterface):
     def iter_eligible_ids(self, rules, batch_size: int):
         return _transport.iter_eligible_db(G2PRegisterHousehold, rules, batch_size)
 
-    def iter_priority_ids(self, priority_domains, enrolled_ids, fallback_rules, batch_size):
+    def iter_priority_ids(
+        self, priority_domains, enrolled_ids, fallback_rules, batch_size
+    ):
         return _transport.iter_priority_db(
             G2PRegisterHousehold,
             priority_domains,

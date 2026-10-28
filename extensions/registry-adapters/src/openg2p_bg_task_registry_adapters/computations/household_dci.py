@@ -4,6 +4,7 @@ from openg2p_bg_task_models.schemas import BeneficiarySearchResponsePayload
 
 from ..config import RegistryAdapterSettings
 from ..interface import RegistryInterface
+from . import _transport
 from ._dci_records import (
     HOUSEHOLD_DCI_FIELDS,
     household_flat,
@@ -12,7 +13,6 @@ from ._dci_records import (
     household_row,
 )
 from ._summary import HouseholdSummaries
-from . import _transport
 
 
 class HouseholdDCI(HouseholdSummaries, RegistryInterface):
@@ -45,7 +45,9 @@ class HouseholdDCI(HouseholdSummaries, RegistryInterface):
             household_id,
         )
 
-    def iter_priority_ids(self, priority_domains, enrolled_ids, fallback_rules, batch_size):
+    def iter_priority_ids(
+        self, priority_domains, enrolled_ids, fallback_rules, batch_size
+    ):
         settings = RegistryAdapterSettings.get_config()
         return _transport.iter_priority_dci(
             priority_domains,
@@ -88,7 +90,9 @@ class HouseholdDCI(HouseholdSummaries, RegistryInterface):
         page_size: int = 10,
         order_by: str = "internal_record_id asc",
     ):
-        registrant_ids = await _transport._beneficiary_ids(bg_task_session, beneficiary_list_id)
+        registrant_ids = await _transport._beneficiary_ids(
+            bg_task_session, beneficiary_list_id
+        )
         settings = RegistryAdapterSettings.get_config()
         rows, total = _transport.search_dci(
             registrant_ids,

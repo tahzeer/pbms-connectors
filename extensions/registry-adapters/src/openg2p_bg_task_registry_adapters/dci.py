@@ -31,7 +31,9 @@ def search(
         headers={"Content-Type": "application/json"},
         method="POST",
     )
-    context = None if settings.partner_api_ssl_verify else ssl._create_unverified_context()
+    context = (
+        None if settings.partner_api_ssl_verify else ssl._create_unverified_context()
+    )
     try:
         with urlopen(
             request,
