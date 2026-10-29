@@ -64,7 +64,7 @@ class FarmerDB(FarmerSummaries, RegistryInterface):
         )
         return (
             BeneficiarySearchResponsePayload(
-                total_beneficiary_count=total,
+                beneficiary_count=total,
                 page=page,
                 page_size=page_size,
                 beneficiaries=rows,
