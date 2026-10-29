@@ -6,4 +6,4 @@ ARG PBMS_VERSION=develop
 FROM ${PBMS_IMAGE}:${PBMS_VERSION}
 
 COPY extensions/registry-adapters /src/registry-adapters
-RUN pip install --no-cache-dir /src/registry-adapters
+RUN pip install --no-cache-dir --timeout 300 /src/registry-adapters
