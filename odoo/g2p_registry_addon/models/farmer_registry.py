@@ -2,7 +2,7 @@ from odoo import fields, models
 
 
 class G2PFarmerRegistry(models.Model):
-    _name = "g2p.register.farmer"
+    _name = "g2p.register.farmers"
     _description = "Farmer Registry"
     _inherit = "g2p.registry"
     _auto = False

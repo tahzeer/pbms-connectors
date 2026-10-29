@@ -3,8 +3,8 @@ from enum import Enum
 
 class G2PTargetModelMapping:
     MODEL_MAPPING = {
-        "farmer": "g2p.register.farmer",
-        "households": "g2p.register.households",
+        "farmer": "g2p.register.farmers",
+        "household": "g2p.register.households",
     }
 
     @classmethod
@@ -14,7 +14,7 @@ class G2PTargetModelMapping:
 
 class G2PRegistryType(Enum):
     FARMER = "farmer"
-    HOUSEHOLDS = "households"
+    HOUSEHOLD = "household"
 
     @classmethod
     def selection(cls):

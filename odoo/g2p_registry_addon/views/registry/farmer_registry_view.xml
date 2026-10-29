@@ -3,13 +3,13 @@
     <!-- Actions -->
     <record id="action_g2p_farmer_registry" model="ir.actions.act_window">
         <field name="name">Farmer Registry</field>
-        <field name="res_model">g2p.register.farmer</field>
+        <field name="res_model">g2p.register.farmers</field>
         <field name="view_mode">tree,form</field>
     </record>
 
     <record id="view_g2p_farmer_registry_form" model="ir.ui.view">
-        <field name="name">g2p.register.farmer.form</field>
-        <field name="model">g2p.register.farmer</field>
+        <field name="name">g2p.register.farmers.form</field>
+        <field name="model">g2p.register.farmers</field>
         <field name="arch" type="xml">
             <form string="G2P Farmer Registry" create="0">
                 <sheet>
@@ -66,8 +66,8 @@
     </record>
 
     <record id="view_g2p_farmer_registry_tree" model="ir.ui.view">
-        <field name="name">g2p.register.farmer.tree</field>
-        <field name="model">g2p.register.farmer</field>
+        <field name="name">g2p.register.farmers.tree</field>
+        <field name="model">g2p.register.farmers</field>
         <field name="arch" type="xml">
             <tree string="G2P Farmer Registry" create="0">
                 <field name="internal_record_id"/>

@@ -11,13 +11,13 @@
 
                 <!-- Domain widget for the 'farmer' type -->
                 <field name="pbms_domain" widget="domain"
-                       options="{'model': 'g2p.register.farmer', 'allowed_fields': ['priority_rank']}"
+                       options="{'model': 'g2p.register.farmers', 'allowed_fields': ['priority_rank']}"
                        invisible="target_registry != 'farmer'"/>
 
                 <!-- Domain widget for the 'household' type -->
                 <field name="pbms_domain" widget="domain"
                        options="{'model': 'g2p.register.households', 'allowed_fields': ['priority_rank']}"
-                       invisible="target_registry != 'households'"/>
+                       invisible="target_registry != 'household'"/>
 
             </xpath>
         </field>

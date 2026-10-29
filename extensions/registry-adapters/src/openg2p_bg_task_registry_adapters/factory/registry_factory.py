@@ -8,8 +8,8 @@ from ..models import G2PRegistryType
 _CLASSES = {
     (G2PRegistryType.FARMER.value, "db"): FarmerDB,
     (G2PRegistryType.FARMER.value, "dci"): FarmerDCI,
-    (G2PRegistryType.HOUSEHOLDS.value, "db"): HouseholdDB,
-    (G2PRegistryType.HOUSEHOLDS.value, "dci"): HouseholdDCI,
+    (G2PRegistryType.HOUSEHOLD.value, "db"): HouseholdDB,
+    (G2PRegistryType.HOUSEHOLD.value, "dci"): HouseholdDCI,
 }
 
 
