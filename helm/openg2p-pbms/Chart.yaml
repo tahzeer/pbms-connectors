@@ -24,10 +24,12 @@ maintainers:
   - name: OpenG2P
     email: info@openg2p.org
 
-# openg2p-pbms-platform is HARDCODED (not CI-rewritten). The images in
-# docker/*/Dockerfile use ARG PBMS_VERSION=develop, the moving tag published
-# with that platform chart. Move this version and PBMS_VERSION together when
-# cutting a release against a specific platform chart.
+# openg2p-pbms-platform is HARDCODED (not CI-rewritten) and must equal
+# ARG PBMS_VERSION in every docker/*/Dockerfile: the images extend the base
+# images published with this exact chart version. Change both with
+# scripts/bump-pbms-version.sh; test/test_pbms_pin_lockstep.py fails CI if
+# they split. 0.0.0-develop is an unpublished placeholder, so nothing resolves
+# until the first real pin.
 # Aliased to `pbms` so the overlay nests under .Values.pbms.*.
 dependencies:
   - name: openg2p-pbms-platform

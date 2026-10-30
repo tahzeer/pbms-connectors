@@ -1,8 +1,8 @@
 # Odoo image a cluster runs. Adds the theme and registry addons on the PBMS base.
-# PBMS_VERSION is the openg2p-pbms-odoo-base tag. Move it with the
-# openg2p-pbms-platform chart dependency in helm/openg2p-pbms/Chart.yaml.
+# PBMS_VERSION must equal the openg2p-pbms-platform dependency version in
+# helm/openg2p-pbms/Chart.yaml. Change both with scripts/bump-pbms-version.sh.
 ARG PBMS_IMAGE=openg2p/openg2p-pbms-odoo-base
-ARG PBMS_VERSION=develop
+ARG PBMS_VERSION=0.0.0-develop
 FROM ${PBMS_IMAGE}:${PBMS_VERSION}
 
 ARG EXTRA_ADDONS_DIR=/opt/odoo/extraaddons
